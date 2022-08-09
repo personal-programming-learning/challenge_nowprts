@@ -1,0 +1,39 @@
+{
+  "name": "challenge-nowports",
+  "version": "1.0.0",
+  "description": "En este pryecto se presenta una API REST desarrollada en `NodeJS` utilizando como lenguage core `TypeScript` y `Sequelize` como ORM SQL, como motor de base de datos SQLITE.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "npm run build-ts && node dist/server.js",
+    "dev": "export ENV=dev && nodemon index.ts",
+    "build-ts": "rm -rf dist && tsc --sourceMap false",
+    "copy_env_dev": "mkdir -p ./dist/environments && cp environments/.dev.env dist/environments/.",
+    "build:dev": "npm run build-ts && npm run copy_env_dev && cp -r src/templates/. dist/src/templates && cp package.json ./dist/ && cp Dockerfile.dev ./dist/Dockerfile"
+  },
+  "keywords": [],
+  "author": "Ludwing Rivera Amador",
+  "license": "ISC",
+  "dependencies": {
+    "class-validator": "^0.13.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
+    "morgan": "^1.10.0",
+    "mysql": "^2.18.1",
+    "sequelize": "^6.21.3",
+    "sqlite3": "^5.0.11",
+    "typeorm": "^0.3.7",
+    "typeorm-naming-strategies": "^4.1.0",
+    "typescript": "^4.7.4",
+    "uuid": "^8.3.2"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.12",
+    "@types/express": "^4.17.13",
+    "@types/morgan": "^1.9.3",
+    "concurrently": "^7.3.0",
+    "nodemon": "^2.0.19",
+    "ts-node": "^10.9.1"
+  }
+}

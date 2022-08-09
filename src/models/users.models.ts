@@ -1,9 +1,21 @@
-import { DataTypes, Sequelize } from "sequelize";
+import { DataTypes, Sequelize, Model, Optional } from "sequelize";
 
 import { Connection } from "../connection/index.connection";
 
+interface UserAtributes {
+  id?: string;
+  email?: string;
+  password?: string;
+  name?: string;
+  createdAt?: string;
+  updatedAt?: string;
+}
+
+interface UserCreateAtributes extends Optional<UserAtributes, "id"> {}
+interface UserInterface extends Model<UserAtributes, UserCreateAtributes>, UserAtributes {}
+
 const UsersModel = () => {
-  let model = (Connection.getInstance().db as Sequelize).define('users',{
+  let model = (Connection.getInstance().db as Sequelize).define<UserInterface>('users',{
     "id": {
 			"type": DataTypes.UUID,
 			"primaryKey": true,
@@ -20,10 +32,7 @@ const UsersModel = () => {
 		},
 		"createdAt": {
 			"type": DataTypes.STRING
-		},
-		"updatedAt": {
-			"type": DataTypes.STRING
-		},
+		}
   });
 
   return model;

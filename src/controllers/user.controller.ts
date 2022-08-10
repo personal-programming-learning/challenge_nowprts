@@ -7,6 +7,7 @@ import moment from "moment";
 
 import { Connection } from "../connection/index.connection";
 import UsersModel from "../models/users.models";
+import { SendMail } from "../helpers/sendMail";
 
 export class UserController {
   
@@ -259,6 +260,23 @@ export class UserController {
 
       // Generate Token
       let token = await this.generateToken(_user);
+
+      // Sent message
+      new SendMail('register')
+        .send({
+          to: true,
+          name: name,
+          email: email,
+          password: password,
+        }, '¡Beinvenido! Registro éxitoso.')
+        .then(() => {
+          console.info('Email enviado con exíto')
+        })
+        .catch(e => { 
+          const error: any = { message: 'Email from "Register" not sending.', error: `${e}` } 
+          throw new Error (error);
+          return;
+        })
 
       // Commit transaction
       await transaction.commit();
